@@ -1,0 +1,10 @@
+# Xiaomi PatchWall Debloat Profile
+# Disables PatchWall home, promotions, and analytics
+com.mitv.tvhome
+com.xiaomi.mitv.upgrade
+com.xiaomi.mitv.advertise
+com.xiaomi.mitv.shop
+com.xiaomi.mitv.payment
+com.xiaomi.account
+com.mi.dlauncher
+com.xiaomi.statistic

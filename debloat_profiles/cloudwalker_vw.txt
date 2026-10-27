@@ -1,0 +1,10 @@
+# CloudWalker / VW Smart TV Debloat Profile
+# Disables OEM launcher, store, analytics, and telemetry
+tv.cloudwalker.cwnativehome
+tv.cloudwalker.cwhome
+tv.cloudwalker.apps
+tv.cloudwalker.cloudcache
+com.vstv.fallbackhome
+com.vstv.tvwizard
+com.vstv.hotel
+com.hisilicon.tv.vsfactorytest

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  =============================================================================
+  Hospitality TV Launcher Configuration
+  =============================================================================
+  Customize these values to match your Airbnb / boutique stay property.
+-->
+<resources>
+    <!-- Welcome greeting displayed under the time of day (e.g. GOOD EVENING) -->
+    <string name="welcome_message">Welcome to Luxacaves!</string>
+
+    <!-- Property or brand name -->
+    <string name="property_name">Luxacaves Boutique Stays</string>
+
+    <!-- Wallpaper auto-rotation interval in seconds -->
+    <integer name="wallpaper_interval_seconds">20</integer>
+
+    <!-- Curated dock apps (shown on the main home screen).
+         Apps not installed on the TV are automatically hidden. -->
+    <string-array name="dock_apps">
+        <item>com.google.android.youtube.tv</item>
+        <item>com.amazon.amazonvideo.livingroom</item>
+        <item>com.netflix.mediaclient</item>
+        <item>in.startv.hotstar</item>
+        <item>com.graymatrix.did</item>
+        <item>com.sonyliv</item>
+        <item>com.spotify.tv.android</item>
+    </string-array>
+
+    <!-- Apps to hide from the "All Apps" drawer (OEM bloatware, factory apps, test tools) -->
+    <string-array name="hidden_apps">
+        <item>com.vstv.fallbackhome</item>
+        <item>com.vstv.factory</item>
+        <item>com.hisilicon.tv.vsfactorytest</item>
+        <item>com.vstv.hotel</item>
+        <item>com.vstv.tvwizard</item>
+        <item>tv.cloudwalker.apps</item>
+    </string-array>
+
+    <!-- TV Tuner / Live TV package name (optional, opens when "Live TV" is clicked) -->
+    <string name="live_tv_package" translatable="false">com.hisilicon.tvui</string>
+
+    <!-- Fallback OEM input picker package name -->
+    <string name="input_picker_package" translatable="false">com.vstv.tvui</string>
+
+    <!-- Number of app columns in the "All Apps" drawer -->
+    <integer name="columns">5</integer>
+</resources>

@@ -1,0 +1,9 @@
+# Amazon Fire TV Debloat Profile
+# Disables Fire TV home recommendations, telemetry, and sponsored ads
+com.amazon.tv.launcher
+com.amazon.device.sale.service
+com.amazon.advertising.firetv
+com.amazon.tv.livetv
+com.amazon.visualpresence
+com.amazon.device.messaging
+com.amazon.kor.demo

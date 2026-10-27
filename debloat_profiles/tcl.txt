@@ -1,0 +1,9 @@
+# TCL Android TV Debloat Profile
+# Disables TCL Channel, T-Cast, user tracking, and recommended video carousels
+com.tcl.tv
+com.tcl.usercenter
+com.tcl.channel
+com.tcl.browser
+com.tcl.videomap
+com.tcl.partnercustomizer
+com.tcl.messagebox

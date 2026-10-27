@@ -1,0 +1,23 @@
+# Build output
+launcher/build/
+*.apk
+*.dex
+*.class
+bin/
+gen/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+tools/.adbkey/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.gradle/
+local.properties
+*.iml
