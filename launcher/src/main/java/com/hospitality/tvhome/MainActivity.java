@@ -339,7 +339,7 @@ public class MainActivity extends Activity {
         wifiPill = pill("Wi-Fi", R.drawable.ic_wifi);
         wifiPill.setOnClickListener(v -> launch(new Intent(Settings.ACTION_WIFI_SETTINGS)));
         TextView settings = pill("Settings", R.drawable.ic_settings);
-        settings.setOnClickListener(v -> launch(new Intent(Settings.ACTION_SETTINGS)));
+        settings.setOnClickListener(v -> showSettingsMenu(v));
         for (TextView p : new TextView[]{inputs, wifiPill, settings}) {
             right.addView(p, llp(-2, dp(54), dp(14), 0, 0, 0));
             pills.add(p);
@@ -415,6 +415,23 @@ public class MainActivity extends Activity {
 
         List<App> dock = new ArrayList<>();
         for (String p : dockApps) if (byPkg.containsKey(p)) dock.add(byPkg.remove(p));
+        String[] systemPkgs = new String[]{"com.android.tv.settings", "com.android.settings"};
+        for (String spkg : systemPkgs) {
+            if (!byPkg.containsKey(spkg)) {
+                try {
+                    pm.getPackageInfo(spkg, 0);
+                    App sa = new App();
+                    sa.pkg = spkg;
+                    sa.label = spkg.contains("tv") ? "Android TV Settings" : "System Settings";
+                    Intent lIntent = pm.getLaunchIntentForPackage(spkg);
+                    if (lIntent != null) sa.component = lIntent.getComponent();
+                    else sa.component = new ComponentName(spkg, spkg.contains("tv") ? "com.android.tv.settings.MainSettings" : "com.android.settings.Settings");
+                    sa.art = getDrawable(R.drawable.ic_settings);
+                    sa.isBanner = false;
+                    byPkg.put(spkg, sa);
+                } catch (Exception ignored) { }
+            }
+        }
         List<App> rest = new ArrayList<>(byPkg.values());
         Collections.sort(rest, (x, y) -> x.label.compareToIgnoreCase(y.label));
 
@@ -616,6 +633,81 @@ public class MainActivity extends Activity {
     }
 
     // ---------------------------------------------------------------- inputs
+
+        private void tryLaunchAny(Intent... intents) {
+        for (Intent it : intents) {
+            try {
+                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(it);
+                return;
+            } catch (Exception ignored) { }
+        }
+        // Fallback to default settings
+        try {
+            startActivity(new Intent(Settings.ACTION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        } catch (Exception ignored) { }
+    }
+
+    private void showSettingsMenu(View anchor) {
+        LinearLayout list = new LinearLayout(this);
+        list.setOrientation(LinearLayout.VERTICAL);
+        list.setPadding(dp(8), dp(8), dp(8), dp(8));
+        GradientDrawable bg = new GradientDrawable();
+        bg.setCornerRadius(dp(16));
+        bg.setColor(0xF0202228);
+        bg.setStroke(dp(1), 0x26FFFFFF);
+        list.setBackground(bg);
+
+        PopupWindow pw = new PopupWindow(list, dp(280), -2, true);
+        List<TextView> rows = new ArrayList<>();
+
+        rows.add(inputRow("Developer Options", R.drawable.ic_settings, () -> {
+            tryLaunchAny(
+                new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS),
+                new Intent().setComponent(new ComponentName("com.android.tv.settings", "com.android.tv.settings.device.developer.DeveloperSettingsActivity")),
+                new Intent().setComponent(new ComponentName("com.android.settings", "com.android.settings.DevelopmentSettings")),
+                new Intent().setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$DevelopmentSettingsActivity")),
+                new Intent("com.android.settings.APPLICATION_DEVELOPMENT_SETTINGS")
+            );
+        }));
+
+        rows.add(inputRow("Android TV Settings", R.drawable.ic_settings, () -> {
+            tryLaunchAny(
+                new Intent().setComponent(new ComponentName("com.android.tv.settings", "com.android.tv.settings.MainSettings")),
+                new Intent().setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings")),
+                new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS),
+                new Intent("android.settings.SETTINGS")
+            );
+        }));
+
+        rows.add(inputRow("About Device (Build Info)", R.drawable.ic_settings, () -> {
+            tryLaunchAny(
+                new Intent().setComponent(new ComponentName("com.android.tv.settings", "com.android.tv.settings.device.about.AboutActivity")),
+                new Intent().setComponent(new ComponentName("com.android.settings", "com.android.settings.DeviceInfoSettings")),
+                new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS)
+            );
+        }));
+
+        rows.add(inputRow("TV Panel (KKSetting)", R.drawable.ic_settings, () -> {
+            launch(new Intent(Settings.ACTION_SETTINGS));
+        }));
+
+        for (TextView r : rows) {
+            r.setOnClickListener(v -> { pw.dismiss(); ((Runnable) v.getTag()).run(); });
+            list.addView(r, new LinearLayout.LayoutParams(-1, dp(48)));
+        }
+        for (int i = 0; i < rows.size(); i++) {
+            TextView r = rows.get(i);
+            r.setNextFocusUpId(rows.get(Math.max(0, i - 1)).getId());
+            r.setNextFocusDownId(rows.get(Math.min(rows.size() - 1, i + 1)).getId());
+            r.setNextFocusLeftId(r.getId());
+            r.setNextFocusRightId(r.getId());
+        }
+        pw.setOutsideTouchable(true);
+        pw.setElevation(dp(16));
+        pw.showAsDropDown(anchor, 0, dp(8), Gravity.START);
+        rows.get(0).requestFocus();
+    }
 
     private void showInputs(View anchor) {
         LinearLayout list = new LinearLayout(this);
