@@ -18,12 +18,15 @@
     <!-- Curated dock apps (shown on the main home screen).
          Apps not installed on the TV are automatically hidden. -->
     <string-array name="dock_apps">
+        <item>org.smarttube.stable</item>
         <item>com.google.android.youtube.tv</item>
         <item>com.amazon.amazonvideo.livingroom</item>
         <item>com.netflix.mediaclient</item>
+        <item>com.netflix.ninja</item>
         <item>in.startv.hotstar</item>
         <item>com.graymatrix.did</item>
         <item>com.sonyliv</item>
+        <item>com.jio.media.ondemand</item>
         <item>com.spotify.tv.android</item>
     </string-array>
 
@@ -35,13 +38,17 @@
         <item>com.vstv.hotel</item>
         <item>com.vstv.tvwizard</item>
         <item>tv.cloudwalker.apps</item>
+        <item>com.hospitality.adbactivator</item>
+        <item>de.szalkowski.activitylauncher.oss</item>
+        <item>com.android.cts.ctsshim</item>
+        <item>com.android.cts.priv.ctsshim</item>
     </string-array>
 
     <!-- TV Tuner / Live TV package name (optional, opens when "Live TV" is clicked) -->
     <string name="live_tv_package" translatable="false">com.hisilicon.tvui</string>
 
     <!-- Fallback OEM input picker package name -->
-    <string name="input_picker_package" translatable="false">com.vstv.tvui</string>
+    <string name="input_picker_package" translatable="false">com.hisilicon.tvui</string>
 
     <!-- Number of app columns in the "All Apps" drawer -->
     <integer name="columns">5</integer>
