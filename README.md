@@ -3,6 +3,8 @@
 # 🏨 Hospitality TV
 ### Turn Any Budget Smart TV into a Luxury Apple TV-Style Hospitality Experience for Your Airbnb or Boutique Stay
 
+[![Release](https://img.shields.io/github/v/release/samkitpalecha/hospitality-tv?color=gold&label=Latest%20Release)](https://github.com/samkitpalecha/hospitality-tv/releases/latest)
+[![Download APK](https://img.shields.io/badge/Download-hospitality--tv.apk-blue?logo=android)](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/hospitality-tv.apk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-gold.svg)](https://opensource.org/licenses/MIT)
 [![Android](https://img.shields.io/badge/Android-5.0_to_14-brightgreen.svg)](https://developer.android.com)
 [![Build](https://img.shields.io/badge/Build_Time-2s_(Zero_Gradle)-blue.svg)](launcher/build.py)
