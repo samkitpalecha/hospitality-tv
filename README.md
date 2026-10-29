@@ -13,8 +13,9 @@
 
 <br/>
 
-### 📥 [👉 Click Here to Download hospitality-tv.apk (Direct Download)](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/hospitality-tv.apk)
-*Short URL for TV browsers: **`tinyurl.com/26lmqqnv`***
+### 📥 Direct Downloads:
+- 🚀 **[Download ActivityLauncher.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/ActivityLauncher.apk)** *(Opens Developer Options directly on locked TVs)*
+- 🏨 **[Download hospitality-tv.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/hospitality-tv.apk)** *(Luxury Hospitality Launcher)*
 
 <br/>
 
