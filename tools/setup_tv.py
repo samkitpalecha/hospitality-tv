@@ -33,11 +33,21 @@ def cmd_probe(args):
     android_ver = dev.shell("getprop ro.build.version.release").strip()
     size = dev.shell("wm size").strip()
     density = dev.shell("wm density").strip()
+    kk_prop = dev.shell("getprop ro.kk.buildsetting").strip()
+    is_kitking = bool(kk_prop) or "com.kitking.geminiplusluancher" in dev.shell("pm list packages com.kitking")
+    is_cw = "tv.cloudwalker.cwhome" in dev.shell("pm list packages tv.cloudwalker")
+
     print("\n=== TV Hardware Information ===")
     print(f"Device:       {brand} {model}")
     print(f"Android:      Version {android_ver}")
     print(f"Resolution:   {size}")
     print(f"Density:      {density}")
+    if is_kitking:
+        print("Generation:   2026 Model (KitKing OEM firmware)")
+        print("Recommended:  python setup_tv.py <ip> debloat --profile vw_2026_kitking")
+    elif is_cw:
+        print("Generation:   2025 Model (CloudWalker OEM firmware)")
+        print("Recommended:  python setup_tv.py <ip> debloat --profile vw_2025_cloudwalker")
     print("Status:       Connected & Ready for Setup\n")
 
 def cmd_install(args):
@@ -73,12 +83,21 @@ def cmd_set_default(args):
 
 def cmd_debloat(args):
     dev = tv_connect.connect(args.ip)
-    profile_path = os.path.join(DEBLOAT_DIR, f"{args.profile}.txt")
+    profile_aliases = {
+        "vw_2026": "vw_2026_kitking",
+        "kitking": "vw_2026_kitking",
+        "vw_2025": "vw_2025_cloudwalker",
+        "cloudwalker": "vw_2025_cloudwalker",
+        "cloudwalker_vw": "vw_2025_cloudwalker",
+        "xiaomi": "xiaomi_patchwall",
+    }
+    profile_name = profile_aliases.get(args.profile.lower(), args.profile)
+    profile_path = os.path.join(DEBLOAT_DIR, f"{profile_name}.txt")
     if not os.path.exists(profile_path):
         available = [f.replace(".txt", "") for f in os.listdir(DEBLOAT_DIR) if f.endswith(".txt")]
         sys.exit(f"Profile '{args.profile}' not found. Available profiles: {', '.join(available)}")
 
-    print(f"Applying debloat profile: {args.profile}")
+    print(f"Applying debloat profile: {profile_name}")
     with open(profile_path, "r", encoding="utf-8") as f:
         packages = [line.strip() for line in f if line.strip() and not line.startswith("#")]
 
@@ -110,7 +129,11 @@ def cmd_lockdown(args):
 def cmd_screenshot(args):
     dev = tv_connect.connect(args.ip)
     out = args.output or "tv_screen.png"
-    tv_connect.screenshot(dev, out)
+    print(f"Capturing screenshot to {out}...")
+    dev.shell("screencap -p /sdcard/temp_screen.png")
+    tv_connect.pull_file(dev, "/sdcard/temp_screen.png", out)
+    dev.shell("rm -f /sdcard/temp_screen.png")
+    print("Screenshot captured successfully!")
 
 def main():
     parser = argparse.ArgumentParser(description="Hospitality TV - Setup Wizard for Airbnb Hosts")

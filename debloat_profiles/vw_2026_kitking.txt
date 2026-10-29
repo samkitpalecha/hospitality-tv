@@ -1,0 +1,29 @@
+# Visio World (VW) Smart TV 2026 Debloat Profile
+# Hardware: HiSilicon Hi3751V352E / HS352E / MIBOX4 (Android 9 / fake release 14)
+# OEM Layer: KitKing Firmware (com.kitking.*)
+#
+# Safe debloat list: Disables OEM promotional launcher, background telemetry,
+# factory test tools, ad services, and redundant player/settings utilities.
+# NOTE: com.kitking.tvappstore is intentionally kept intact so guests/hosts can install apps.
+
+# OEM Launcher & Feed Layers
+com.kitking.geminiplusluancher
+com.sraf.launcher.ext
+com.distroscale.tv.android
+com.aladdin.voice.assistant
+tv.cloudwalker.channels
+com.kitking.livetvchannel
+
+# Background Telemetry & Junk Utilities
+com.kitking.OperateHelp
+com.kitking.networkspeed
+com.kitking.upgrade
+com.kitking.appupgrade
+
+# Factory Test & Quality Control Tools
+com.kitking.KKFQC
+com.kitking.autofactorytest
+
+# Redundant Settings & Built-in Player (Handled cleanly by Hospitality TV & native Android Settings)
+com.hisilicon.tvui
+com.kitking.mbasesetting

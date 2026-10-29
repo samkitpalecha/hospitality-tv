@@ -2,6 +2,7 @@ package com.hospitality.tvhome;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -193,7 +194,7 @@ public class MainActivity extends Activity {
         // Home pressed while already home: jump back to the first dock app.
         if (inputsPopup != null) inputsPopup.dismiss();
         if (!dockCards.isEmpty()) dockCards.get(0).requestFocus();
-        scroll.smoothScrollTo(0, 0);
+        smoothScrollTo(0);
     }
 
     @Override
@@ -223,7 +224,17 @@ public class MainActivity extends Activity {
         gridShade.setAlpha(0f);
         root.addView(gridShade, new FrameLayout.LayoutParams(-1, -1));
         try {
-            wallpapers = getAssets().list("wallpapers");
+            String[] allWp = getAssets().list("wallpapers");
+            List<String> fullBleed = new ArrayList<>();
+            if (allWp != null) {
+                for (String w : allWp) {
+                    if (w.equals("01.jpg") || w.equals("03.jpg") || w.equals("05.jpg") ||
+                        w.equals("07.jpg") || w.equals("09.jpg") || w.equals("11.jpg")) {
+                        fullBleed.add(w);
+                    }
+                }
+            }
+            wallpapers = fullBleed.isEmpty() ? (allWp != null ? allWp : new String[0]) : fullBleed.toArray(new String[0]);
         } catch (java.io.IOException ignored) { }
 
         glow = new View(this);
@@ -256,13 +267,13 @@ public class MainActivity extends Activity {
         bottom.setClipToPadding(false);
         hero.addView(bottom, lp(-1, -2, Gravity.BOTTOM, dp(48), 0, dp(48), dp(30)));
 
-        title = text(48, "sans-serif-medium", Color.WHITE);
+        title = text(38, "sans-serif-medium", Color.WHITE);
         if (montserratSemiBold != null) title.setTypeface(montserratSemiBold);
         title.setShadowLayer(dp(22), 0, 0, 0x66000000);
         title.setSingleLine(true);
         LinearLayout.LayoutParams titleLp = new LinearLayout.LayoutParams(-2, -2);
         titleLp.gravity = Gravity.CENTER_HORIZONTAL;
-        titleLp.setMargins(0, 0, 0, dp(16));
+        titleLp.setMargins(0, 0, 0, dp(14));
         bottom.addView(title, titleLp);
 
         dockRow = new LinearLayout(this);
@@ -270,9 +281,9 @@ public class MainActivity extends Activity {
         dockRow.setGravity(Gravity.CENTER);
         dockRow.setClipChildren(false);
         dockRow.setClipToPadding(false);
-        dockRow.setPadding(dp(26), dp(18), dp(26), dp(18));
+        dockRow.setPadding(dp(22), dp(16), dp(22), dp(16));
         GradientDrawable band = new GradientDrawable();
-        band.setCornerRadius(dp(28));
+        band.setCornerRadius(dp(24));
         band.setColor(0x24FFFFFF);
         band.setStroke(dp(1), 0x18FFFFFF);
         dockRow.setBackground(band);
@@ -301,13 +312,13 @@ public class MainActivity extends Activity {
         left.setOrientation(LinearLayout.VERTICAL);
         left.setClipChildren(false);
         left.setClipToPadding(false);
-        greeting = text(18, "sans-serif-medium", 0xB3FFFFFF);
+        greeting = text(15, "sans-serif-medium", 0xB3FFFFFF);
         greeting.setLetterSpacing(0.14f);
         greeting.setSingleLine(true);
         greeting.setPadding(0, 0, dp(48), 0);
         left.addView(greeting);
 
-        welcome = text(24, "sans-serif-medium", 0xE6FFFFFF);
+        welcome = text(20, "sans-serif-medium", 0xE6FFFFFF);
         welcome.setLetterSpacing(0.05f);
         welcome.setSingleLine(true);
         welcome.setPadding(0, 0, dp(48), 0);
@@ -316,20 +327,20 @@ public class MainActivity extends Activity {
 
         LinearLayout clockRow = new LinearLayout(this);
         clockRow.setGravity(Gravity.BOTTOM);
-        clock = text(110, "sans-serif-light", Color.WHITE);
+        clock = text(78, "sans-serif-light", Color.WHITE);
         clock.setIncludeFontPadding(false);
         clockRow.addView(clock);
-        ampm = text(26, "sans-serif-medium", 0xCCFFFFFF);
-        clockRow.addView(ampm, llp(-2, -2, dp(12), 0, 0, dp(14)));
+        ampm = text(20, "sans-serif-medium", 0xCCFFFFFF);
+        clockRow.addView(ampm, llp(-2, -2, dp(10), 0, 0, dp(10)));
         left.addView(clockRow, llp(-2, -2, 0, dp(2), 0, dp(2)));
 
-        date = text(18, "sans-serif-medium", 0x99FFFFFF);
+        date = text(14, "sans-serif-medium", 0x99FFFFFF);
         date.setSingleLine(true);
         date.setPadding(0, 0, dp(64), 0);
         date.setLetterSpacing(0.12f);
         left.addView(date);
-        for (TextView t : new TextView[]{greeting, welcome, clock, ampm, date}) t.setShadowLayer(dp(14), 0, dp(1), 0xB3000000);
-        header.addView(left, new FrameLayout.LayoutParams(dp(660), -2, Gravity.START | Gravity.TOP));
+        for (TextView t : new TextView[]{greeting, welcome, clock, ampm, date}) t.setShadowLayer(dp(12), 0, dp(1), 0xB3000000);
+        header.addView(left, new FrameLayout.LayoutParams(dp(580), -2, Gravity.START | Gravity.TOP));
 
         LinearLayout right = new LinearLayout(this);
         right.setGravity(Gravity.CENTER_VERTICAL);
@@ -339,7 +350,7 @@ public class MainActivity extends Activity {
         wifiPill = pill("Wi-Fi", R.drawable.ic_wifi);
         wifiPill.setOnClickListener(v -> launch(new Intent(Settings.ACTION_WIFI_SETTINGS)));
         TextView settings = pill("Settings", R.drawable.ic_settings);
-        settings.setOnClickListener(v -> showSettingsMenu(v));
+        settings.setOnClickListener(v -> launch(new Intent(Settings.ACTION_SETTINGS)));
         for (TextView p : new TextView[]{inputs, wifiPill, settings}) {
             right.addView(p, llp(-2, dp(54), dp(14), 0, 0, 0));
             pills.add(p);
@@ -379,7 +390,7 @@ public class MainActivity extends Activity {
             }
             v.animate().scaleX(has ? 1.08f : 1f).scaleY(has ? 1.08f : 1f)
                     .setInterpolator(new OvershootInterpolator(2f)).setDuration(220).start();
-            if (has) { lastFocusedId = v.getId(); scroll.smoothScrollTo(0, 0); fadeGlow(1f); }
+            if (has) { lastFocusedId = v.getId(); smoothScrollTo(0); fadeGlow(1f); }
         });
         return p;
     }
@@ -403,6 +414,11 @@ public class MainActivity extends Activity {
             a.component = new ComponentName(ai.packageName, ai.name);
             Drawable banner = ai.loadBanner(pm);
             if (banner == null) banner = ai.applicationInfo.loadBanner(pm);
+            if (banner == null && "com.netflix.mediaclient".equals(ai.packageName)) {
+                try {
+                    banner = getDrawable(R.drawable.banner_netflix);
+                } catch (Exception ignored) { }
+            }
             a.isBanner = banner != null;
             a.art = banner != null ? banner : ri.loadIcon(pm);
             if (a.art instanceof android.graphics.drawable.BitmapDrawable) {
@@ -415,23 +431,7 @@ public class MainActivity extends Activity {
 
         List<App> dock = new ArrayList<>();
         for (String p : dockApps) if (byPkg.containsKey(p)) dock.add(byPkg.remove(p));
-        String[] systemPkgs = new String[]{"com.android.tv.settings", "com.android.settings"};
-        for (String spkg : systemPkgs) {
-            if (!byPkg.containsKey(spkg)) {
-                try {
-                    pm.getPackageInfo(spkg, 0);
-                    App sa = new App();
-                    sa.pkg = spkg;
-                    sa.label = spkg.contains("tv") ? "Android TV Settings" : "System Settings";
-                    Intent lIntent = pm.getLaunchIntentForPackage(spkg);
-                    if (lIntent != null) sa.component = lIntent.getComponent();
-                    else sa.component = new ComponentName(spkg, spkg.contains("tv") ? "com.android.tv.settings.MainSettings" : "com.android.settings.Settings");
-                    sa.art = getDrawable(R.drawable.ic_settings);
-                    sa.isBanner = false;
-                    byPkg.put(spkg, sa);
-                } catch (Exception ignored) { }
-            }
-        }
+
         List<App> rest = new ArrayList<>(byPkg.values());
         Collections.sort(rest, (x, y) -> x.label.compareToIgnoreCase(y.label));
 
@@ -441,16 +441,15 @@ public class MainActivity extends Activity {
         gridCards.clear();
 
         int dSize = dock.size();
-        int tileW = dp(190);
-        if (dSize >= 8) tileW = dp(150);
-        else if (dSize >= 7) tileW = dp(165);
-        else if (dSize >= 6) tileW = dp(182);
-        else if (dSize >= 5) tileW = dp(195);
+        int tileW = dp(160);
+        if (dSize >= 7) tileW = dp(132);
+        else if (dSize >= 6) tileW = dp(144);
+        else if (dSize >= 5) tileW = dp(156);
 
         for (int i = 0; i < dock.size(); i++) {
             View tile = tile(dock.get(i), true);
             LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(tileW, -2);
-            p.setMargins(i == 0 ? 0 : dp(14), 0, 0, 0);
+            p.setMargins(i == 0 ? 0 : dp(12), 0, 0, 0);
             dockRow.addView(tile, p);
         }
 
@@ -562,23 +561,23 @@ public class MainActivity extends Activity {
             launch(launchIntent);
         });
         card.setOnFocusChangeListener((v, has) -> {
-            float s = has ? (inDock ? 1.12f : 1.1f) : 1f;
-            v.animate().scaleX(s).scaleY(s).translationZ(has ? dp(14) : 0)
-                    .setInterpolator(has ? new OvershootInterpolator(1.8f) : new DecelerateInterpolator())
-                    .setDuration(has ? 320 : 200).start();
-            shine.animate().alpha(has ? 1f : 0f).setDuration(160).start();
-            label.animate().alpha(has ? 1f : 0f).translationY(has ? dp(4) : 0).setDuration(200).start();
+            float s = has ? (inDock ? 1.08f : 1.06f) : 1f;
+            v.animate().scaleX(s).scaleY(s)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .setDuration(160).start();
+            shine.animate().alpha(has ? 1f : 0f).setDuration(120).start();
+            label.animate().alpha(has ? 1f : 0f).translationY(has ? dp(4) : 0).setDuration(160).start();
             if (!has) return;
             lastFocusedId = v.getId();
             if (inDock) {
                 title.setText(app.label);
-                title.animate().alpha(1f).setDuration(200).start();
+                title.setAlpha(1f);
                 animateGlow(app.color);
                 fadeGlow(1f);
-                scroll.smoothScrollTo(0, 0);
+                smoothScrollTo(0);
             } else {
                 fadeGlow(0.35f);
-                title.animate().alpha(0f).setDuration(200).start();
+                title.setAlpha(0f);
                 scrollToRow(box);
             }
         });
@@ -619,17 +618,27 @@ public class MainActivity extends Activity {
         }
     }
 
+    private ObjectAnimator scrollAnim;
+    private void smoothScrollTo(int target) {
+        if (scrollAnim != null) scrollAnim.cancel();
+        int max = Math.max(0, content.getHeight() - scroll.getHeight());
+        int clamp = Math.max(0, Math.min(target, max));
+        if (scroll.getScrollY() == clamp) return;
+        scrollAnim = ObjectAnimator.ofInt(scroll, "scrollY", clamp);
+        scrollAnim.setDuration(220);
+        scrollAnim.setInterpolator(new DecelerateInterpolator(1.4f));
+        scrollAnim.start();
+    }
+
     private void scrollToRow(View tileBox) {
         View row = (View) tileBox.getParent();
         int y = grid.getTop() + row.getTop();
         int screenH = getResources().getDisplayMetrics().heightPixels;
-        // First grid row: slide the dock band up to the top edge; later rows centre on screen.
         View band = (View) dockRow.getParent();
         int target = grid.indexOfChild(row) == 0
                 ? hero.getTop() + band.getTop() + dockRow.getTop() - dp(22)
                 : y - (int) (screenH * 0.42f);
-        int max = Math.max(0, content.getHeight() - scroll.getHeight());
-        scroll.smoothScrollTo(0, Math.max(0, Math.min(target, max)));
+        smoothScrollTo(target);
     }
 
     // ---------------------------------------------------------------- inputs
@@ -888,11 +897,9 @@ public class MainActivity extends Activity {
     }
 
     private void animateGlow(int to) {
+        if (glowColor == to) return;
         if (glowAnim != null) glowAnim.cancel();
-        glowAnim = ValueAnimator.ofObject(new ArgbEvaluator(), glowColor, to);
-        glowAnim.setDuration(450);
-        glowAnim.addUpdateListener(a -> setGlow((int) a.getAnimatedValue()));
-        glowAnim.start();
+        setGlow(to);
     }
 
     private void fadeGlow(float alpha) {

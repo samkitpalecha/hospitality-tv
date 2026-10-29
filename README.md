@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏨 Hospitality TV
+# 📺 Hospitality TV
 ### Turn Any Budget Smart TV into a Luxury Apple TV-Style Hospitality Experience for Your Airbnb or Boutique Stay
 
 [![Release](https://img.shields.io/github/v/release/samkitpalecha/hospitality-tv?color=gold&label=Latest%20Release)](https://github.com/samkitpalecha/hospitality-tv/releases/latest)
@@ -14,9 +14,9 @@
 <br/>
 
 ### 📥 Direct Downloads:
-- ⚡ **[Download AdbActivator.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/AdbActivator.apk)** *(One-click tool to unlock developer options & start network ADB)*
-- 🚀 **[Download ActivityLauncher.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/ActivityLauncher.apk)** *(Opens Developer Options directly on locked TVs)*
-- 🏨 **[Download hospitality-tv.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/hospitality-tv.apk)** *(Luxury Hospitality Launcher)*
+- ⚡ **[Download AdbActivator.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/AdbActivator.apk)** *(One-click tool to unlock developer options & start network ADB on locked Smart TVs)*
+- 🚀 **[Download ActivityLauncher.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/ActivityLauncher.apk)** *(Opens hidden Developer Options directly on locked TVs)*
+- 📺 **[Download hospitality-tv.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/hospitality-tv.apk)** *(Luxury Hospitality Launcher)*
 
 <br/>
 
@@ -30,26 +30,27 @@
 
 ---
 
-## ✨ Why Airbnb Hosts Need This
+## 💡 Why Airbnb Hosts Need This
 
-Most budget Smart TVs (TCL, Hisense, Xiaomi, Vu, CloudWalker, Fire TV) come out of the box with cluttered, ad-heavy interfaces:
+Most budget Smart TVs (TCL, Hisense, Xiaomi, Vu, CloudWalker, Fire TV, Visio World) come out of the box with cluttered, ad-heavy interfaces:
 - ❌ **Spam Ads & Clutter:** Unwanted apps, manufacturer recommendations, and slow OEM stores confuse guests.
 - ❌ **Support Messages:** Guests constantly text: *"How do I switch to HDMI for my PlayStation?"* or *"Where is Netflix?"*
 - ❌ **Cheap First Impression:** A generic budget TV UI ruins the luxury feel of a carefully designed space.
-- ❌ **Commercial Solutions Cost \$15–\$30/mo/room:** Hotel TV software requires recurring fees and proprietary hardware.
+- ❌ **Commercial Solutions Cost $15–$30/mo/room:** Hotel TV software requires recurring fees and proprietary hardware.
 
 ### 🌟 What Hospitality TV Gives You:
-- 👑 **Boutique Hotel Aesthetic:** Ambient, glassmorphic UI styled like Apple TV with your property’s branding, logo, and photography.
-- 📸 **20-Second Listing Showcase:** Auto-rotates through native 1080p/4K hero shots and photo collages of your property highlights (pool, patio, suites, sunsets).
-- 🎬 **Curated Guest App Dock:** Only the essentials (Netflix, Prime Video, YouTube, Disney+, Spotify). No clutter, no bloat.
+- 🏨 **Boutique Hotel Aesthetic:** Ambient, glassmorphic UI styled like Apple TV with your property's branding, logo, and photography.
+- 🖼️ **20-Second Listing Showcase:** Auto-rotates through native 1080p/4K hero shots and photo collages of your property highlights (pool, patio, suites, sunsets).
+- 🎬 **Curated Guest App Dock:** Only the essentials (Netflix, Prime Video, YouTube, JioHotstar, ZEE5, Sony LIV). No clutter, no bloat.
 - 🎮 **Direct 1-Click Inputs:** Dedicated popup switcher for **HDMI 1**, **HDMI 2**, **HDMI 3**, and **Live TV** with custom vector icons.
-- ⚡ **Ultra-Fast & Lightweight:** Pure native Java, zero third-party dependencies, < 5 MB APK, uses only ~25 MB RAM. Boots instantly.
-- 🔒 **Guest Privacy & Security:** 1-click debloater disables OEM background telemetry and shuts down ADB before guests check in.
+- ⚙️ **1-Click Native Settings:** Instant access to system Wi-Fi and device preferences without confusing sub-menus.
+- ⚡ **Ultra-Fast & Lightweight:** Pure native Java, RenderThread-synced smooth animations, zero third-party dependencies, < 5 MB APK, uses only ~25 MB RAM.
+- 🛡️ **Guest Privacy & Security:** 1-click debloater disables OEM background telemetry and shuts down ADB before guests check in.
 - 💰 **100% Free & Open Source:** Zero subscriptions, zero external servers, runs entirely offline on the TV.
 
 ---
 
-## 📺 Live TV Gallery
+## 📸 Live TV Gallery
 
 | Branded Ambient Home | Direct Hardware Input Switcher |
 | :---: | :---: |
@@ -80,10 +81,23 @@ pip install -r tools/requirements.txt
 Enable **Developer Options** and **USB Debugging** on your TV:
 > **Settings** → **About TV** → Click **Build Number** 7 times.  
 > Go back to **Developer Options** → Enable **USB Debugging** / **Network Debugging**.
+>
+> *(If your TV manufacturer hid Developer Options, install `AdbActivator.apk` via USB to activate network ADB in 1 click).*
 
 Find your TV's IP address (e.g. `192.168.1.50`) under **Settings → Network**, then test connection:
 ```bash
 python tools/setup_tv.py 192.168.1.50 probe
+```
+
+The probe tool automatically detects your TV brand, Android release, display resolution, and generation:
+```
+=== TV Hardware Information ===
+Device:       HiDPT MIBOX4
+Android:      Version 14
+Resolution:   Physical size: 1280x720, Override size: 1920x1080
+Generation:   2026 Model (KitKing OEM firmware)
+Recommended:  python setup_tv.py <ip> debloat --profile vw_2026_kitking
+Status:       Connected & Ready for Setup
 ```
 
 ### 3. Build & Install Your Branded Launcher
@@ -92,10 +106,14 @@ python tools/setup_tv.py 192.168.1.50 install
 ```
 Your TV will instantly switch to the luxury Hospitality TV home screen!
 
-### 4. Optional: Debloat Manufacturer Ads & Lock Down
+### 4. Debloat Manufacturer Ads & Lock Down
 Remove background manufacturer bloatware and speed up the TV:
 ```bash
-python tools/setup_tv.py 192.168.1.50 debloat --profile cloudwalker_vw
+# For 2026 Smart TVs (KitKing firmware):
+python tools/setup_tv.py 192.168.1.50 debloat --profile vw_2026_kitking
+
+# For 2025 Smart TVs (CloudWalker firmware):
+python tools/setup_tv.py 192.168.1.50 debloat --profile vw_2025_cloudwalker
 ```
 
 When you are ready for guest check-in, lock down ADB wirelessly:
@@ -138,9 +156,11 @@ In [`launcher/res/values/config.xml`](launcher/res/values/config.xml), edit the 
 ```xml
 <string-array name="dock_apps">
     <item>com.google.android.youtube.tv</item>
-    <item>com.netflix.mediaclient</item>
     <item>com.amazon.amazonvideo.livingroom</item>
-    <item>com.spotify.tv.android</item>
+    <item>com.netflix.mediaclient</item>
+    <item>in.startv.hotstar</item>
+    <item>com.graymatrix.did</item>
+    <item>com.sonyliv</item>
 </string-array>
 ```
 *Tip: If an app is listed but not installed on the TV, Hospitality TV automatically skips it.*
@@ -164,23 +184,25 @@ Open the project root in **Android Studio** and click **Run** or build with:
 
 ---
 
-## 📱 Supported Hardware
+## 📺 Supported Hardware & Generations
 
 Hospitality TV works on virtually any Android-based TV or streaming box:
+- **Visio World (VW) 2026 Generation:** HiSilicon Hi3751V352E / HS352E with KitKing firmware (`--profile vw_2026_kitking`).
+- **Visio World (VW) 2025 Generation:** HiSilicon Hi3751V350 with CloudWalker firmware (`--profile vw_2025_cloudwalker`).
 - **Smart TVs:** TCL, Hisense, Xiaomi / Mi TV, Redmi, Vu, CloudWalker, Kodak, Blaupunkt, Thomson, Sony Bravia, Philips.
 - **Streaming Devices:** Amazon Fire TV Stick, Chromecast with Google TV, Xiaomi TV Stick, NVIDIA Shield TV, Onn TV 4K.
 - **Android Versions:** Android 5.0 (Lollipop, API 21) up to Android 14 (API 34).
 
 ---
 
-## 🛡️ Debloat Profiles Included
+## 🧹 Debloat Profiles Included
 
-| Profile | Target Brand | Description |
+| Profile | Target Hardware / TV | Description |
 | :--- | :--- | :--- |
-| `cloudwalker_vw.txt` | CloudWalker, VW, Shinco | Disables CW native home, OEM app store, and telemetry |
+| `vw_2026_kitking.txt` | Visio World (VW) 2026 TV | Disables KitKing launcher, factory tests, ads, and telemetry while keeping App Store intact |
+| `vw_2025_cloudwalker.txt` | Visio World (VW) 2025 TV | Disables CloudWalker recommendation launcher, feed channels, and VSTV bloat |
 | `xiaomi_patchwall.txt` | Xiaomi Mi TV, Redmi TV | Disables PatchWall ads, recommendations, and analytics |
 | `firetv.txt` | Amazon Fire TV / Stick | Disables home screen auto-playing video ads and shopping carousels |
-| `hisense_vidaa.txt` | Hisense Android TVs | Removes OEM video carousels and partner promotions |
 | `tcl.txt` | TCL Android TVs | Disables TCL Channel, T-Cast, and background analytics |
 
 ---

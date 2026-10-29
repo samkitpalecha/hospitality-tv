@@ -1,0 +1,36 @@
+# Visio World (VW) Smart TV 2025 Debloat Profile
+# Hardware: HiSilicon Hi3751V350 / Android 9 (SDK 28)
+# OEM Layer: CloudWalker Firmware (tv.cloudwalker.* / com.vstv.*)
+#
+# Safe debloat list: Disables CloudWalker recommendation launcher, background channels,
+# market telemetry, and VSTV bloatware while keeping essential hardware services intact.
+
+# CloudWalker Recommendation Feed, Ad Channels & Telemetry
+tv.cloudwalker.cwnativehome
+tv.cloudwalker.cwhome
+tv.cloudwalker.apps
+tv.cloudwalker.cloudcache
+tv.cloudwalker.channels
+tv.cloudwalker.cloudwalkeruniverse
+tv.cloudwalker.market
+tv.cloudwalker.skin
+tv.cloudwalker.profile
+tv.cloudwalker.apiservice
+tv.cloudwalker.search
+tv.cloudwalker.player
+tv.cloudwalker.inputserver
+
+# VSTV Bloatware, Hotel Mode & Factory Tools
+com.vstv.fallbackhome
+com.vstv.tvwizard
+com.vstv.hotel
+com.vstv.appstore
+com.vstv.diagnosis
+com.vstv.ilink
+com.vstv.tv.assistant
+com.vstv.mediacenterhis
+com.hisilicon.tv.vsfactorytest
+
+# Unused AOSP Services
+com.android.browser
+com.android.bips

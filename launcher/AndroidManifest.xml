@@ -27,6 +27,8 @@
         android:icon="@drawable/ic_home"
         android:banner="@drawable/ic_home"
         android:allowBackup="false"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
         android:theme="@style/Home">
 
         <activity

@@ -18,7 +18,6 @@
     <!-- Curated dock apps (shown on the main home screen).
          Apps not installed on the TV are automatically hidden. -->
     <string-array name="dock_apps">
-        <item>org.smarttube.stable</item>
         <item>com.google.android.youtube.tv</item>
         <item>com.amazon.amazonvideo.livingroom</item>
         <item>com.netflix.mediaclient</item>
@@ -26,8 +25,6 @@
         <item>in.startv.hotstar</item>
         <item>com.graymatrix.did</item>
         <item>com.sonyliv</item>
-        <item>com.jio.media.ondemand</item>
-        <item>com.spotify.tv.android</item>
     </string-array>
 
     <!-- Apps to hide from the "All Apps" drawer (OEM bloatware, factory apps, test tools) -->
@@ -42,6 +39,9 @@
         <item>de.szalkowski.activitylauncher.oss</item>
         <item>com.android.cts.ctsshim</item>
         <item>com.android.cts.priv.ctsshim</item>
+        <item>com.hisilicon.tvsetting</item>
+        <item>com.hisilicon.tvui</item>
+        <item>com.kitking.mbasesetting</item>
     </string-array>
 
     <!-- TV Tuner / Live TV package name (optional, opens when "Live TV" is clicked) -->
