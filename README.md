@@ -14,6 +14,7 @@
 <br/>
 
 ### 📥 Direct Downloads:
+- ⚡ **[Download AdbActivator.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/AdbActivator.apk)** *(One-click tool to unlock developer options & start network ADB)*
 - 🚀 **[Download ActivityLauncher.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/ActivityLauncher.apk)** *(Opens Developer Options directly on locked TVs)*
 - 🏨 **[Download hospitality-tv.apk](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/hospitality-tv.apk)** *(Luxury Hospitality Launcher)*
 
