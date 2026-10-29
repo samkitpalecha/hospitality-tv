@@ -13,6 +13,11 @@
 
 <br/>
 
+### 📥 [👉 Click Here to Download hospitality-tv.apk (Direct Download)](https://github.com/samkitpalecha/hospitality-tv/releases/download/v1.0.0/hospitality-tv.apk)
+*Short URL for TV browsers: **`tinyurl.com/26lmqqnv`***
+
+<br/>
+
 <img src="preview/hero_live.png" alt="Hospitality TV Home Screen" width="90%"/>
 
 <p align="center">
